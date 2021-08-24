@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
-import { Envelope, Key, ArrowReturnRight, ArrowLeft, PlayFill } from 'react-bootstrap-icons'
+import { ArrowReturnRight, ArrowLeft, PlayFill } from 'react-bootstrap-icons'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { dracula } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 // https://www.npmjs.com/package/react-fade-in
@@ -17,7 +17,6 @@ import trendingNPM1 from '../data/trending-npm-1.json'
 import trendingNPM2 from '../data/trending-npm-2.json'
 import trendingTV from '../data/trending-tv.json'
 import upcomingMovies from '../data/upcoming-movies.json'
-import router from 'next/router'
 
 export default function Home() {
   const [error, setError] = useState(null)
@@ -109,7 +108,7 @@ ${BASE_API_ENDPOINT}${endpoint}\`)
           className="mx-auto mb-5"
           variant="light"
           style={{width: '10em'}}
-          href="https://github.com/CodaBool/p09-web-scraper"
+          href="https://github.com/CodaBool/p09-scraper-consumer"
         >
           See Code <ArrowReturnRight className="ml-2" size={18} />
         </Button>
