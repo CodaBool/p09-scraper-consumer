@@ -1,0 +1,609 @@
+{
+  "0": {
+      "name": "freeCodeCamp",
+      "href": "https://github.com/freeCodeCamp/freeCodeCamp",
+      "description": "freeCodeCamp.org's open-source codebase and curriculum. Learn to code for free.",
+      "stars": 328929
+  },
+  "1": {
+      "name": "996.ICU",
+      "href": "https://github.com/996icu/996.ICU",
+      "description": "Repo for counting stars and contributing. Press F to pay respect to glorious developers.",
+      "stars": 258341
+  },
+  "2": {
+      "name": "free-programming-books",
+      "href": "https://github.com/EbookFoundation/free-programming-books",
+      "description": ":books: Freely available programming books",
+      "stars": 199561
+  },
+  "3": {
+      "name": "coding-interview-university",
+      "href": "https://github.com/jwasham/coding-interview-university",
+      "description": "A complete computer science study plan to become a software engineer.",
+      "stars": 190184
+  },
+  "4": {
+      "name": "react",
+      "href": "https://github.com/facebook/react",
+      "description": "A declarative, efficient, and flexible JavaScript library for building user interfaces.",
+      "stars": 173431
+  },
+  "5": {
+      "name": "developer-roadmap",
+      "href": "https://github.com/kamranahmedse/developer-roadmap",
+      "description": "Roadmap to becoming a web developer in 2021",
+      "stars": 169197
+  },
+  "6": {
+      "name": "awesome",
+      "href": "https://github.com/sindresorhus/awesome",
+      "description": "😎 Awesome lists about all kinds of interesting topics",
+      "stars": 167464
+  },
+  "7": {
+      "name": "bootstrap",
+      "href": "https://github.com/twbs/bootstrap",
+      "description": "The most popular HTML, CSS, and JavaScript framework for developing responsive, mobile first projects on the web.",
+      "stars": 152513
+  },
+  "8": {
+      "name": "public-apis",
+      "href": "https://github.com/public-apis/public-apis",
+      "description": "A collective list of free APIs",
+      "stars": 152426
+  },
+  "9": {
+      "name": "You-Dont-Know-JS",
+      "href": "https://github.com/getify/You-Dont-Know-JS",
+      "description": "A book series on JavaScript. @YDKJS on twitter.",
+      "stars": 143240
+  },
+  "10": {
+      "name": "system-design-primer",
+      "href": "https://github.com/donnemartin/system-design-primer",
+      "description": "Learn how to design large-scale systems. Prep for the system design interview.  Includes Anki flashcards.",
+      "stars": 141919
+  },
+  "11": {
+      "name": "CS-Notes",
+      "href": "https://github.com/CyC2018/CS-Notes",
+      "description": ":books: 技术面试必备基础知识、Leetcode、计算机操作系统、计算机网络、系统设计",
+      "stars": 137151
+  },
+  "12": {
+      "name": "ohmyzsh",
+      "href": "https://github.com/ohmyzsh/ohmyzsh",
+      "description": "🙃   A delightful community-driven (with 1800+ contributors) framework for managing your zsh configuration. Includes 300+ optional plugins (rails, git, OSX, hub, docker, homebrew, node, php, python, etc), 140+ themes to spice up your morning, and an auto-update tool so that makes it easy to keep up ",
+      "stars": 132025
+  },
+  "13": {
+      "name": "flutter",
+      "href": "https://github.com/flutter/flutter",
+      "description": "Flutter makes it easy and fast to build beautiful apps for mobile and beyond.",
+      "stars": 128253
+  },
+  "14": {
+      "name": "gitignore",
+      "href": "https://github.com/github/gitignore",
+      "description": "A collection of useful .gitignore templates",
+      "stars": 122354
+  },
+  "15": {
+      "name": "vscode",
+      "href": "https://github.com/microsoft/vscode",
+      "description": "Visual Studio Code",
+      "stars": 120460
+  },
+  "16": {
+      "name": "javascript-algorithms",
+      "href": "https://github.com/trekhleb/javascript-algorithms",
+      "description": "📝 Algorithms and data structures implemented in JavaScript with explanations and links to further readings",
+      "stars": 117744
+  },
+  "17": {
+      "name": "linux",
+      "href": "https://github.com/torvalds/linux",
+      "description": "Linux kernel source tree",
+      "stars": 116723
+  },
+  "18": {
+      "name": "build-your-own-x",
+      "href": "https://github.com/danistefanovic/build-your-own-x",
+      "description": "🤓 Build your own (insert technology here)",
+      "stars": 115559
+  },
+  "19": {
+      "name": "Python",
+      "href": "https://github.com/TheAlgorithms/Python",
+      "description": "All Algorithms implemented in Python",
+      "stars": 114811
+  },
+  "20": {
+      "name": "JavaGuide",
+      "href": "https://github.com/Snailclimb/JavaGuide",
+      "description": "「Java学习+面试指南」一份涵盖大部分 Java 程序员所需要掌握的核心知识。准备 Java 面试，首选 JavaGuide！",
+      "stars": 109511
+  },
+  "21": {
+      "name": "Python-100-Days",
+      "href": "https://github.com/jackfrued/Python-100-Days",
+      "description": "Python - 100天从新手到大师",
+      "stars": 107360
+  },
+  "22": {
+      "name": "awesome-python",
+      "href": "https://github.com/vinta/awesome-python",
+      "description": "A curated list of awesome Python frameworks, libraries, software and resources",
+      "stars": 101956
+  },
+  "23": {
+      "name": "youtube-dl",
+      "href": "https://github.com/ytdl-org/youtube-dl",
+      "description": "Command-line program to download videos from YouTube.com and other video sites",
+      "stars": 99201
+  },
+  "24": {
+      "name": "d3",
+      "href": "https://github.com/d3/d3",
+      "description": "Bring data to life with SVG, Canvas and HTML. :bar_chart::chart_with_upwards_trend::tada:",
+      "stars": 97919
+  },
+  "25": {
+      "name": "electron",
+      "href": "https://github.com/electron/electron",
+      "description": ":electron: Build cross-platform desktop apps with JavaScript, HTML, and CSS",
+      "stars": 96360
+  },
+  "26": {
+      "name": "fucking-algorithm",
+      "href": "https://github.com/labuladong/fucking-algorithm",
+      "description": "刷算法全靠套路，认准 labuladong 就够了！English version supported! Crack LeetCode, not only how, but also why. ",
+      "stars": 94788
+  },
+  "27": {
+      "name": "computer-science",
+      "href": "https://github.com/ossu/computer-science",
+      "description": ":mortar_board: Path to a free self-taught education in Computer Science!",
+      "stars": 94231
+  },
+  "28": {
+      "name": "the-art-of-command-line",
+      "href": "https://github.com/jlevy/the-art-of-command-line",
+      "description": "Master the command line, in one page",
+      "stars": 93829
+  },
+  "29": {
+      "name": "create-react-app",
+      "href": "https://github.com/facebook/create-react-app",
+      "description": "Set up a modern web app by running one command.",
+      "stars": 89814
+  },
+  "30": {
+      "name": "go",
+      "href": "https://github.com/golang/go",
+      "description": "The Go programming language",
+      "stars": 89061
+  },
+  "31": {
+      "name": "axios",
+      "href": "https://github.com/axios/axios",
+      "description": "Promise based HTTP client for the browser and node.js",
+      "stars": 87273
+  },
+  "32": {
+      "name": "free-programming-books-zh_CN",
+      "href": "https://github.com/justjavac/free-programming-books-zh_CN",
+      "description": ":books: 免费的计算机编程类中文书籍，欢迎投稿",
+      "stars": 82336
+  },
+  "33": {
+      "name": "30-seconds-of-code",
+      "href": "https://github.com/30-seconds/30-seconds-of-code",
+      "description": "Short JavaScript code snippets for all your development needs",
+      "stars": 82086
+  },
+  "34": {
+      "name": "node",
+      "href": "https://github.com/nodejs/node",
+      "description": "Node.js JavaScript runtime :sparkles::turtle::rocket::sparkles:",
+      "stars": 81169
+  },
+  "35": {
+      "name": "kubernetes",
+      "href": "https://github.com/kubernetes/kubernetes",
+      "description": "Production-Grade Container Scheduling and Management",
+      "stars": 80279
+  },
+  "36": {
+      "name": "deno",
+      "href": "https://github.com/denoland/deno",
+      "description": "A secure JavaScript and TypeScript runtime",
+      "stars": 77421
+  },
+  "37": {
+      "name": "terminal",
+      "href": "https://github.com/microsoft/terminal",
+      "description": "The new Windows Terminal and the original Windows console host, all in the same place!",
+      "stars": 76611
+  },
+  "38": {
+      "name": "angular",
+      "href": "https://github.com/angular/angular",
+      "description": "The modern web developer’s platform",
+      "stars": 75887
+  },
+  "39": {
+      "name": "ant-design",
+      "href": "https://github.com/ant-design/ant-design",
+      "description": "An enterprise-class UI design language and React UI library",
+      "stars": 73940
+  },
+  "40": {
+      "name": "three.js",
+      "href": "https://github.com/mrdoob/three.js",
+      "description": "JavaScript 3D Library.",
+      "stars": 73678
+  },
+  "41": {
+      "name": "TypeScript",
+      "href": "https://github.com/microsoft/TypeScript",
+      "description": "TypeScript is a superset of JavaScript that compiles to clean JavaScript output.",
+      "stars": 73670
+  },
+  "42": {
+      "name": "puppeteer",
+      "href": "https://github.com/puppeteer/puppeteer",
+      "description": "Headless Chrome Node.js API",
+      "stars": 72866
+  },
+  "43": {
+      "name": "next.js",
+      "href": "https://github.com/vercel/next.js",
+      "description": "The React Framework",
+      "stars": 72306
+  },
+  "44": {
+      "name": "material-ui",
+      "href": "https://github.com/mui-org/material-ui",
+      "description": "Material-UI is a simple and customizable component library to build faster, beautiful, and more accessible React applications. Follow your own design system, or start with Material Design.",
+      "stars": 70497
+  },
+  "45": {
+      "name": "vue-element-admin",
+      "href": "https://github.com/PanJiaChen/vue-element-admin",
+      "description": ":tada: A magical vue admin                                                                https://panjiachen.github.io/vue-element-admin",
+      "stars": 70145
+  },
+  "46": {
+      "name": "nodebestpractices",
+      "href": "https://github.com/goldbergyoni/nodebestpractices",
+      "description": ":white_check_mark:  The Node.js best practices list (August 2021)",
+      "stars": 70018
+  },
+  "47": {
+      "name": "java-design-patterns",
+      "href": "https://github.com/iluwatar/java-design-patterns",
+      "description": "Design patterns implemented in Java",
+      "stars": 69638
+  },
+  "48": {
+      "name": "awesome-go",
+      "href": "https://github.com/avelino/awesome-go",
+      "description": "A curated list of awesome Go frameworks, libraries and software",
+      "stars": 67512
+  },
+  "49": {
+      "name": "LeetCodeAnimation",
+      "href": "https://github.com/MisterBooo/LeetCodeAnimation",
+      "description": "Demonstrate all the questions on LeetCode in the form of animation.（用动画的形式呈现解LeetCode题目的思路）",
+      "stars": 66536
+  },
+  "50": {
+      "name": "laravel",
+      "href": "https://github.com/laravel/laravel",
+      "description": "A PHP framework for web artisans.",
+      "stars": 66315
+  },
+  "51": {
+      "name": "Font-Awesome",
+      "href": "https://github.com/FortAwesome/Font-Awesome",
+      "description": "The iconic SVG, font, and CSS toolkit",
+      "stars": 65983
+  },
+  "52": {
+      "name": "storybook",
+      "href": "https://github.com/storybookjs/storybook",
+      "description": "📓 The UI component explorer. Develop, document, & test React, Vue, Angular, Web Components, Ember, Svelte & more!",
+      "stars": 64213
+  },
+  "53": {
+      "name": "thefuck",
+      "href": "https://github.com/nvbn/thefuck",
+      "description": "Magnificent app which corrects your previous console command.",
+      "stars": 63631
+  },
+  "54": {
+      "name": "awesome-selfhosted",
+      "href": "https://github.com/awesome-selfhosted/awesome-selfhosted",
+      "description": "A list of Free Software network services and web applications which can be hosted on your own servers",
+      "stars": 62578
+  },
+  "55": {
+      "name": "awesome-vue",
+      "href": "https://github.com/vuejs/awesome-vue",
+      "description": "🎉 A curated list of awesome things related to Vue.js",
+      "stars": 61925
+  },
+  "56": {
+      "name": "moby",
+      "href": "https://github.com/moby/moby",
+      "description": "Moby Project - a collaborative project for the container ecosystem to assemble container-based systems",
+      "stars": 60953
+  },
+  "57": {
+      "name": "realworld",
+      "href": "https://github.com/gothinkster/realworld",
+      "description": "\"The mother of all demo apps\" — Exemplary fullstack Medium.com clone powered by React, Angular, Node, Django, and many more 🏅",
+      "stars": 59776
+  },
+  "58": {
+      "name": "angular.js",
+      "href": "https://github.com/angular/angular.js",
+      "description": "AngularJS - HTML enhanced for web apps!",
+      "stars": 59596
+  },
+  "59": {
+      "name": "django",
+      "href": "https://github.com/django/django",
+      "description": "The Web framework for perfectionists with deadlines.",
+      "stars": 59230
+  },
+  "60": {
+      "name": "webpack",
+      "href": "https://github.com/webpack/webpack",
+      "description": "A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows for loading parts of the application on demand. Through \"loaders\", modules can be CommonJs, AMD, ES6 modules, CSS, Images, JSON, Coffeescript, LESS, ... and your custom stuff.",
+      "stars": 59093
+  },
+  "61": {
+      "name": "PowerToys",
+      "href": "https://github.com/microsoft/PowerToys",
+      "description": "Windows system utilities to maximize productivity",
+      "stars": 58878
+  },
+  "62": {
+      "name": "rust",
+      "href": "https://github.com/rust-lang/rust",
+      "description": "Empowering everyone to build reliable and efficient software.",
+      "stars": 58040
+  },
+  "63": {
+      "name": "FiraCode",
+      "href": "https://github.com/tonsky/FiraCode",
+      "description": "Free monospaced font with programming ligatures",
+      "stars": 57802
+  },
+  "64": {
+      "name": "reveal.js",
+      "href": "https://github.com/hakimel/reveal.js",
+      "description": "The HTML Presentation Framework",
+      "stars": 57035
+  },
+  "65": {
+      "name": "spring-boot",
+      "href": "https://github.com/spring-projects/spring-boot",
+      "description": "Spring Boot",
+      "stars": 56806
+  },
+  "66": {
+      "name": "bitcoin",
+      "href": "https://github.com/bitcoin/bitcoin",
+      "description": "Bitcoin Core integration/staging tree",
+      "stars": 56554
+  },
+  "67": {
+      "name": "redux",
+      "href": "https://github.com/reduxjs/redux",
+      "description": "Predictable state container for JavaScript apps",
+      "stars": 56530
+  },
+  "68": {
+      "name": "tech-interview-handbook",
+      "href": "https://github.com/yangshun/tech-interview-handbook",
+      "description": "💯 Curated interview preparation materials for busy engineers",
+      "stars": 56278
+  },
+  "69": {
+      "name": "opencv",
+      "href": "https://github.com/opencv/opencv",
+      "description": "Open Source Computer Vision Library",
+      "stars": 56211
+  },
+  "70": {
+      "name": "elasticsearch",
+      "href": "https://github.com/elastic/elasticsearch",
+      "description": "Free and Open, Distributed, RESTful Search Engine",
+      "stars": 56151
+  },
+  "71": {
+      "name": "advanced-java",
+      "href": "https://github.com/doocs/advanced-java",
+      "description": "😮 Core Interview Questions & Answers For Experienced Java(Backend) Developers | 互联网 Java 工程师进阶知识完全扫盲：涵盖高并发、分布式、高可用、微服务、海量数据处理等领域知识",
+      "stars": 56105
+  },
+  "72": {
+      "name": "atom",
+      "href": "https://github.com/atom/atom",
+      "description": ":atom: The hackable text editor",
+      "stars": 55925
+  },
+  "73": {
+      "name": "json-server",
+      "href": "https://github.com/typicode/json-server",
+      "description": "Get a full fake REST API with zero coding in less than 30 seconds (seriously)",
+      "stars": 55888
+  },
+  "74": {
+      "name": "clean-code-javascript",
+      "href": "https://github.com/ryanmcdermott/clean-code-javascript",
+      "description": ":bathtub: Clean Code concepts adapted for JavaScript",
+      "stars": 55793
+  },
+  "75": {
+      "name": "netdata",
+      "href": "https://github.com/netdata/netdata",
+      "description": "Real-time performance monitoring, done right! https://www.netdata.cloud",
+      "stars": 55682
+  },
+  "76": {
+      "name": "Front-End-Checklist",
+      "href": "https://github.com/thedaviddias/Front-End-Checklist",
+      "description": "🗂 The perfect Front-End Checklist for modern websites and meticulous developers",
+      "stars": 55660
+  },
+  "77": {
+      "name": "jquery",
+      "href": "https://github.com/jquery/jquery",
+      "description": "jQuery JavaScript Library",
+      "stars": 55277
+  },
+  "78": {
+      "name": "Chart.js",
+      "href": "https://github.com/chartjs/Chart.js",
+      "description": "Simple HTML5 Charts using the <canvas> tag",
+      "stars": 54563
+  },
+  "79": {
+      "name": "socket.io",
+      "href": "https://github.com/socketio/socket.io",
+      "description": "Realtime application framework (Node.JS server)",
+      "stars": 54200
+  },
+  "80": {
+      "name": "express",
+      "href": "https://github.com/expressjs/express",
+      "description": "Fast, unopinionated, minimalist web framework for node.",
+      "stars": 54147
+  },
+  "81": {
+      "name": "architect-awesome",
+      "href": "https://github.com/xingshaocheng/architect-awesome",
+      "description": "后端架构师技术图谱",
+      "stars": 54017
+  },
+  "82": {
+      "name": "hugo",
+      "href": "https://github.com/gohugoio/hugo",
+      "description": "The world’s fastest framework for building websites.",
+      "stars": 53654
+  },
+  "83": {
+      "name": "interviews",
+      "href": "https://github.com/kdn251/interviews",
+      "description": "Everything you need to know to get the job.",
+      "stars": 53584
+  },
+  "84": {
+      "name": "scrcpy",
+      "href": "https://github.com/Genymobile/scrcpy",
+      "description": "Display and control your Android device",
+      "stars": 53373
+  },
+  "85": {
+      "name": "markdown-here",
+      "href": "https://github.com/adam-p/markdown-here",
+      "description": "Google Chrome, Firefox, and Thunderbird extension that lets you write email in Markdown and render it before sending.",
+      "stars": 52822
+  },
+  "86": {
+      "name": "shadowsocks-windows",
+      "href": "https://github.com/shadowsocks/shadowsocks-windows",
+      "description": "A C# port of shadowsocks",
+      "stars": 52802
+  },
+  "87": {
+      "name": "keras",
+      "href": "https://github.com/keras-team/keras",
+      "description": "Deep Learning for humans",
+      "stars": 52197
+  },
+  "88": {
+      "name": "mall",
+      "href": "https://github.com/macrozheng/mall",
+      "description": "mall项目是一套电商系统，包括前台商城系统及后台管理系统，基于SpringBoot+MyBatis实现，采用Docker容器化部署。 前台商城系统包含首页门户、商品推荐、商品搜索、商品展示、购物车、订单流程、会员中心、客户服务、帮助中心等模块。 后台管理系统包含商品管理、订单管理、会员管理、促销管理、运营管理、内容管理、统计报表、财务管理、权限管理、设置等模块。",
+      "stars": 51895
+  },
+  "89": {
+      "name": "httpie",
+      "href": "https://github.com/httpie/httpie",
+      "description": "As easy as /aitch-tee-tee-pie/ 🥧 Modern, user-friendly command-line HTTP client for the API era. JSON support, colors, sessions, downloads, plugins & more. https://twitter.com/httpie",
+      "stars": 51725
+  },
+  "90": {
+      "name": "Apollo-11",
+      "href": "https://github.com/chrislgarry/Apollo-11",
+      "description": "Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules.",
+      "stars": 51304
+  },
+  "91": {
+      "name": "html5-boilerplate",
+      "href": "https://github.com/h5bp/html5-boilerplate",
+      "description": "A professional front-end template for building fast, robust, and adaptable web apps or sites.",
+      "stars": 51255
+  },
+  "92": {
+      "name": "gatsby",
+      "href": "https://github.com/gatsbyjs/gatsby",
+      "description": "Build blazing fast, modern apps and websites with React",
+      "stars": 51133
+  },
+  "93": {
+      "name": "awesome-machine-learning",
+      "href": "https://github.com/josephmisiti/awesome-machine-learning",
+      "description": "A curated list of awesome Machine Learning frameworks, libraries and software.",
+      "stars": 51114
+  },
+  "94": {
+      "name": "nvm",
+      "href": "https://github.com/nvm-sh/nvm",
+      "description": "Node Version Manager - POSIX-compliant bash script to manage multiple active node.js versions",
+      "stars": 50828
+  },
+  "95": {
+      "name": "gin",
+      "href": "https://github.com/gin-gonic/gin",
+      "description": "Gin is a HTTP web framework written in Go (Golang). It features a Martini-like API with much better performance -- up to 40 times faster. If you need smashing performance, get yourself some Gin.",
+      "stars": 50772
+  },
+  "96": {
+      "name": "element",
+      "href": "https://github.com/ElemeFE/element",
+      "description": "A Vue.js 2.0 UI Toolkit for Web",
+      "stars": 50707
+  },
+  "97": {
+      "name": "redis",
+      "href": "https://github.com/redis/redis",
+      "description": "Redis is an in-memory database that persists on disk. The data model is key-value, but many different kind of values are supported: Strings, Lists, Sets, Sorted Sets, Hashes, Streams, HyperLogLogs, Bitmaps.",
+      "stars": 50694
+  },
+  "98": {
+      "name": "lodash",
+      "href": "https://github.com/lodash/lodash",
+      "description": "A modern JavaScript utility library delivering modularity, performance, & extras.",
+      "stars": 50472
+  },
+  "99": {
+      "name": "pytorch",
+      "href": "https://github.com/pytorch/pytorch",
+      "description": "Tensors and Dynamic neural networks in Python with strong GPU acceleration",
+      "stars": 50389
+  },
+  "createdAt": {
+      "$date": "2021-08-23T20:56:55.255Z"
+  },
+  "updatedAt": {
+      "$date": "2021-08-23T20:56:55.255Z"
+  },
+  "__v": 0
+}

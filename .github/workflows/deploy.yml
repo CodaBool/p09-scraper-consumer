@@ -1,0 +1,64 @@
+# name: p09-scraper-consumer
+# on:
+#   push:
+#     branches: [main]
+# jobs:
+#   deploy:
+#     if: "! contains(github.event.commits[0].message, '[no ci]')"
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       # The stage is extracted from the branch name, since deploys are only ran on dev and prod branch
+#       # WARNING: if deployments are done differently then this needs to be edited (hardcoded or from github event context)
+#       - name: Extract Pipline Vars
+#         # The repo name must be validated since it will be used in the S3 Bucket creation when saving Serverless state
+#         # Repo name must follow S3 Naming conventions, no space + no uppercase
+#         # Lower Cases the Repo name, Github already removes space
+#         run: |
+#           repo=${GITHUB_REPOSITORY#CodaBool/}
+#           echo "##[set-output name=repo;]${repo,,}" 
+#           echo "##[set-output name=stage;]${GITHUB_REF#refs/heads/}"
+#           build=$(echo "${SHA:0:7}.${RUN_NUMBER}"|tr -d '"') # removes an annoying double quote
+#           echo "##[set-output name=build;]${build}"
+#         id: extract # allows use of ${{ steps.extract.outputs.stage }} for pipeline stage/repo
+#         env:
+#           SHA: ${{ toJSON(github.sha) }}
+#           RUN_NUMBER: ${{ toJSON(github.run_number) }}
+
+#       - uses: actions/setup-node@v2-beta
+#         with:
+#           node-version: '14'
+
+#       - name: Configure AWS Credentials
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: us-east-1
+
+#       - name: Install dependencies
+#         run: npm ci
+
+#       - name: Serverless AWS authentication
+#         if: ${{ github.ref == 'refs/heads/sample' }}
+#         run: npx serverless --component=serverless-next config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+#       - name: Download `.serverless` state from S3
+#         if: ${{ github.ref == 'refs/heads/sample' }}
+#         run: |
+#           aws s3api head-object --bucket sls-state --key ${{ steps.extract.outputs.repo }}/${{ steps.extract.outputs.stage }}/.serverless/_.json || not_exist=true
+#           if [ ! $not_exist ]; then
+#             aws s3 sync s3://sls-state/${{ steps.extract.outputs.repo }}/${{ steps.extract.outputs.stage }}/.serverless .serverless --delete 
+#           fi
+          
+#       - name: Deploy to AWS
+#         if: ${{ github.ref == 'refs/heads/sample' }}
+#         run: npx serverless > output && sed '/› Deploying\|aNA/d' output # sed removes the obnoxious output of sls ("aNA" and "*› Deploying*")
+#         env:
+#           STAGE: ${{ steps.extract.outputs.stage }}
+#           REPO: ${{ steps.extract.outputs.repo }}
+#           BUILD_ID: ${{ steps.extract.outputs.build }}
+
+#       - name: Upload `.serverless` state to S3
+#         if: ${{ github.ref == 'refs/heads/sample' }}
+#         run: aws s3 sync .serverless s3://sls-state/${{ steps.extract.outputs.repo }}/${{ steps.extract.outputs.stage }}/.serverless --delete
