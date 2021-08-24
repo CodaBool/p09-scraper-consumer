@@ -37,12 +37,22 @@ a {
   color: #ddca7e;
   padding: 2rem;
 }
-pre {
+.index-pre {
   width: 38rem;
   height: 50rem;
   border-radius: 1% !important;
   box-shadow: .1rem .3rem 1.3rem rgb(163, 163, 163);
   overflow: auto !important;
+}
+.about-pre {
+  /* width: 38rem;
+  height: 50rem; */
+  border-radius: 4% !important;
+  box-shadow: .1rem .3rem 1.3rem rgb(163, 163, 163);
+}
+.about-img {
+  border-radius: 4%;
+  box-shadow: .1rem .3rem 1.3rem rgb(163, 163, 163);
 }
 /* Override Bootstrap Nav */
 .nav-link, .navbar-brand {

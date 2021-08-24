@@ -55,7 +55,7 @@ ${BASE_API_ENDPOINT}${endpoint}\`)
   return (
     <FadeIn>
       <h1 className="my-4 display-3">Welcome, </h1>
-      <h5 className="">This is a simple page to interact with a lambda which scrapes websites and outputs the relevant data.</h5>
+      <h5 className="">This is a simple page to interact with a lambda which scrapes websites and outputs the relevant data. To save on costs, this is using cached dummy data from 2021. More info about how it works and other info can be found in the about page</h5>
       <Col>
         <Card className="my-5 shadow p-4 rounded"
           style={{
@@ -85,13 +85,13 @@ ${BASE_API_ENDPOINT}${endpoint}\`)
                   Send Request <PlayFill className="ml-2" size={20} />
                 </Button>
                 <div className="d-flex" style={{flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'center'}}>
-                  <SyntaxHighlighter language="javascript" style={dracula}>
+                  <SyntaxHighlighter language="javascript" style={dracula} className="index-pre">
                     {markdown}
                   </SyntaxHighlighter>
                   <div className="mx-2"></div>
                   {data && 
                     <FadeIn>
-                      <SyntaxHighlighter language="javascript" style={dracula}>
+                      <SyntaxHighlighter language="javascript" style={dracula} className="index-pre">
                         {JSON.stringify(data, null, 2)}
                       </SyntaxHighlighter>
                     </FadeIn>

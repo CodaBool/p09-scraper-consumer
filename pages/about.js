@@ -1,13 +1,47 @@
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { dracula } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import FadeIn from 'react-fade-in'
+
+const markdown = `
+async function getUpComingMovies() {
+  const html = await axios.get('https://www.imdb.com/calendar')
+    .then(res => res.data)
+    .catch(() => console.log('bad request'))
+  const dom = new JSDOM(html)
+  const main = dom.window.document.querySelector("#main")?.innerHTML
+  const data = {}
+  if (!main) return
+  await Promise.all(main.split('\\n').map(async line => {
+    if (line) { // only read lines with content
+      if (line.includes('<h4>')) { // date
+        const text = line.replace(/<[^>]+>/g, '').trim().replace(/ /g, '_')
+        data[text] = []
+      } else if (line.includes('<a')) { // movie
+        const lastDate = Object.keys(data)[Object.keys(data).length - 1]
+        const partial = line.split('>')[1]
+        const title = partial.substring(0, partial.length - 3);
+        const href = 'https://www.imdb.com' + line.split('\"')[1]
+        let img = ''
+        const arr = data[lastDate]
+        console.log('+', title, '| img =', !!img)
+        arr.push({ title, href, img })
+        data[lastDate] = arr
+      }
+    }
+  }))
+  return data
+}
+`
 
 export default function About() {
   return (
     <Container>
       <h1 className="display-1 my-3">About</h1>
       <Row>
-        <Col md={6} className="aboutSummary p-3">
+        <Col md={6} className="aboutSummary p-5">
           <h5 className="display-4">Serverless Scraping ⛏️</h5>
           <p>
             &emsp;Have you ever run into websites which show something cool interesting and you would like to see more of it but don't want to actually bother to remember the page to go back. 
@@ -21,22 +55,22 @@ export default function About() {
             There are a million ways you can do this, phone apps, websites, or desktop applications, really anything you can imagine. 
             
           </p>
-          <ul>
-            <dd className="d-inline">- React </dd><span className="text-muted"> (Front end)</span><br />
-            <dd className="d-inline">- Socket.io </dd><span className="text-muted"> (Web Sockets)</span><br />
-            <dd className="d-inline">- Express.js </dd><span className="text-muted"> (Back end)</span><br />
-            <dd className="d-inline">- MongoDB </dd><span className="text-muted"> (Database)</span><br />
-          </ul>
         </Col>
         <Col md={6}>
-          <img src="/image/race.PNG" className="rounded shadow w-100 mb-3" />
+          <FadeIn>
+            <SyntaxHighlighter language="javascript" style={dracula} className="about-pre">
+              {markdown}
+            </SyntaxHighlighter>
+          </FadeIn>
         </Col>
         <Col md={6}>
-          <div className="aboutTech">
-            <img src="/image/simple.png" className="rounded w-100 mt-3" />
-          </div>
+          <FadeIn delay={500}>
+            <div className="aboutTech">
+              <img src="/image/discord-bot.jpg" className="w-100 mt-3 about-img" />
+            </div>
+          </FadeIn>
         </Col>
-        <Col md={6} className="aboutSummary p-3">
+        <Col md={6} className="aboutSummary p-5">
           <h5 className="display-4">How I ended up using it 🤖</h5>
           <p>
             &emsp;I was able to get data from several sites that I found interesting. 
@@ -45,12 +79,16 @@ export default function About() {
             This allowed me to type a command like !github and a bot would type an embed with all the scrapped data viewable in a table like format.
           </p>
           <Row>
-            <p className="text-muted mx-auto" style={{fontSize: '1.1rem'}}>This website <a href="https://github.com/CodaBool/p09-scraper-consumer">repo</a></p>
-            <p className="text-muted mx-auto" style={{fontSize: '1.1rem'}}>Lambda Scraper <a href="https://github.com/CodaBool/p09-web-scraper">repo</a></p>
-            <p className="text-muted mx-auto" style={{fontSize: '1.1rem'}}>Discord Bot <a href="https://codabool.com">repo</a></p>
+            <FadeIn delay={500}>
+              <h5 className="text-center mt-4">Code 💾</h5>
+              <hr className="w-50 mx-auto" />
+              <p className="text-muted text-center" style={{fontSize: '1.1rem'}}>This website <a href="https://github.com/CodaBool/p09-scraper-consumer">repo</a></p>
+              <p className="text-muted text-center" style={{fontSize: '1.1rem'}}>Lambda Scraper <a href="https://github.com/CodaBool/p09-web-scraper">repo</a></p>
+              <p className="text-muted text-center" style={{fontSize: '1.1rem'}}>Discord Bot <a href="https://github.com/CodaBool/p09-scraper-consumer/blob/main/discord-bot/index.js">repo sub-folder</a></p>
+            </FadeIn>
           </Row>
         </Col>
-        <Col md={6} className="aboutSummary p-3">
+        <Col md={6} className="aboutSummary p-5">
           <h5 className="display-4">Issues I encountered 😤</h5>
           <p>
             &emsp;I built the technology entirely using the AWS platform and the entire DevOps solution is automated between Github Actions and the Serverless framework.
@@ -64,7 +102,9 @@ export default function About() {
           </p>
         </Col>
         <Col md={6}>
-          <img src="/image/race.PNG" className="rounded shadow w-100 mb-3" />
+          <FadeIn delay={1750}>
+            <img src="https://www.mindgrub.com/sites/default/files/partners/Amazon%20Web%20Services_0.png" className="rounded shadow w-100 mx-auto mt-5" />
+          </FadeIn>
         </Col>
       </Row>
     </Container>
