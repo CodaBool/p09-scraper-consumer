@@ -40,7 +40,6 @@ jobs:
         run: npm ci
 
       - name: Deploy to AWS
-        if: ${{ github.ref == 'refs/heads/sample' }}
         run: |
           npm run export
           aws s3 sync ./out s3://p09-scraper-consumer --delete
