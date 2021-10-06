@@ -1,2 +1,2 @@
 export const LIST_OF_ENDPOINTS = ['trending-github', 'upcoming-movies', 'trending-movies', 'trending-tv', 'upcoming-games', 'trending-npm-1', 'trending-npm-2']
-export const BASE_API_ENDPOINT = 'https://API_GATEWAY_URL_HERE'
+export const BASE_API_ENDPOINT = 'https://API_GATEWAY_URL_HERE/'
