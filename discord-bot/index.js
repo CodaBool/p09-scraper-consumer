@@ -1,27 +1,26 @@
-require('dotenv').config({ path: __dirname.split('\\').slice(0, __dirname.split('\\').length - 1).join('\\') + '\\.env' })
-// console.log('path =', __dirname+'../env')
-console.log('path =', __dirname.split('\\').slice(0, __dirname.split('\\').length - 1).join('\\') + '\\.env')
-console.log('path =', process.env.CHANNEL_ID, process.env.DISCORD_TOKEN)
+require('dotenv').config()
 const Discord = require('discord.js')
-const mongoose = require('mongoose')
+const asTable = require('as-table')
+const pg = require('pg')
 const axios = require('axios')
-const client = new Discord.Client()
-const asTable = require('as-table') // .configure({delimiter: ' | ', dash: '-'})
 
-client.on('ready', () => {
-	console.log(`Logged in as ${client.user.tag}!`)
-	client.user.setActivity('websites', { type: 'WATCHING', url: 'https://github.com/CodaBool/lambda-scraper' })
+const API_URL = 'https://j8xl9nv9k9.execute-api.us-east-1.amazonaws.com/main/api'
+
+// const allIntents = new Intents(32767)
+const client = new Discord.Client({ 
+  intents: ['GUILDS', 'DIRECT_MESSAGES', 'GUILD_MESSAGES', 'GUILD_PRESENCES', 'GUILD_MEMBERS', 'GUILD_MESSAGE_REACTIONS'], 
+  partials: ['MESSAGE', 'CHANNEL']
 })
 
-const CHANNEL_ID = process.env.CHANNEL_ID
-// const CHANNEL_ID = process.env.CHANNEL_ID_TEST // bot test channel
+client.on('ready', () => console.log('ready'))
 
-client.on('message', msg => {
-	if (msg.content === '!any-bots') {
-		client.channels.cache.get(CHANNEL_ID).send('yo')
+client.on('messageCreate', async msg =>{
+  if (msg.content === '!any-bots') {
+    // console.log('user', msg.author)
+    client.channels.cache.get(process.env.HACKER_ID).send('yo')
 	}
-	if (msg.content === '!help' || msg.content.includes('!h')) {
-		const channel = client.channels.cache.get(CHANNEL_ID)
+  if (msg.content === '!help' || msg.content.includes('!h')) {
+		const channel = client.channels.cache.get(process.env.HACKER_ID)
 		let embed = new Discord.MessageEmbed()
 				.setColor('#204194')
 				.addFields([{
@@ -50,109 +49,100 @@ client.on('message', msg => {
 					value: 'Shows the all popular npm packages from libraries.io'
 				}])
 				.setTitle('Commands')
-				.setAuthor('CodaBot', 'https://i.imgur.com/pHPpNA6.png', 'https://github.com/CodaBool/p09-scraper-consumer/blob/main/discord-bot/index.js')
+				.setAuthor({ name: 'CodaBot', url: 'https://github.com/CodaBool/p09-scraper-consumer/blob/main/discord-bot/index.js', iconURL: 'https://i.imgur.com/pHPpNA6.png' })
 				.setThumbnail('https://i.imgur.com/ShZVJwz.png')
-			channel.send(embed)
+      channel.send({embeds: [embed]})
 	}
 	if (msg.content === '!github') {
-		queryModel('trending-github')
-			.then(res => {
-				const channel = client.channels.cache.get(CHANNEL_ID)
-				for (let j = 0; j < 5; j++) {
-					const data = []
-					for (let i = 0; i < 20; i++) {
-						if (res._doc[(j * 20) + i]) {
-							data.push({
-								stars: res._doc[(j * 20) + i].stars,
-								repo: res._doc[(j * 20) + i].name,
-								description: res._doc[(j * 20) + i].description.slice(0, 45)
-							})
-						}
-					}
-					// console.log('DEBUG: sending table with', asTable(data).length, 'length') // 2000
-					channel.send('```md\npage (' + (j + 1) + '/5)\n' + asTable(data) + '```')
-				}
+    const res = await query('SELECT * FROM trending_github')
+    const githubChannel = client.channels.cache.get(process.env.GITHUB_ID)
+		console.log('channel', githubChannel)
+    // breaks 100 results into 5 arrays of twenty
+    const reducedArr = reduce(res, 20)
 
-				// ============ SINGLE asTable ============
-				// guide https://anidiots.guide/first-bot/using-embeds-in-messages
-				// const exampleEmbed = new Discord.MessageEmbed() // embed max 6000
-				// 	.setColor('#de0000')
-				// 	.setTitle('Github top 100 repos by stars')
-				// 	.setDescription('```md\n'+ table.toString() +'```')
-				// .setFooter('GITHUB')
-				// const channel = client.channels.cache.get(CHANNEL_ID)
-				// channel.send(exampleEmbed)
-			})
-			.catch(err => console.log('err', err))
+    for (let j = 0; j < 5; j++) {
+      const data = []
+      for (let i = 0; i < 20; i++) {
+        if (reducedArr[j][i]) {
+          data.push({
+            stars: reducedArr[j][i].stars,
+            repo: reducedArr[j][i].name,
+            description: reducedArr[j][i].description.slice(0, 35)
+          })
+        }
+      }
+      githubChannel.send('```md\npage (' + (j + 1) + '/5)\n' + asTable(data) + '```')
+    }
+    // ============ SINGLE asTable ============
+    // guide https://anidiots.guide/first-bot/using-embeds-in-messages
+    // const exampleEmbed = new Discord.MessageEmbed() // embed max 6000
+    // 	.setColor('#de0000')
+    // 	.setTitle('Github top 100 repos by stars')
+    // 	.setDescription('```md\n'+ table.toString() +'```')
+    // .setFooter('GITHUB')
+    // const channel = client.channels.cache.get(CHANNEL_ID)
+    // channel.send(exampleEmbed)
 	}
 	if (msg.content === '!npm-backend') {
-		queryModel('trending-npm-1')
-			.then(res => {
-				const channel = client.channels.cache.get(CHANNEL_ID)
-				for (let j = 0; j < 5; j++) {
-					const data = []
-					for (let i = 0; i < 20; i++) {
-						if (res._doc[(j * 20) + i]) {
-							data.push({
-								package: res._doc[(j * 20) + i].title,
-								description: res._doc[(j * 20) + i].description.slice(0, 35)
-							})
-						}
-					}
-					// console.log('DEBUG: sending table with', asTable(data).length, 'length') // 2000
-					channel.send('```md\npage (' + (j + 1) + '/5)\n' + asTable(data) + '```')
-				}
-			})
-			.catch(err => console.log('err', err))
+    const res = await query('SELECT * FROM trending_npm_1')
+    const channel = client.channels.cache.get(process.env.NPM_ID)
+
+    const reducedArr = reduce(res, 20)
+    for (let j = 0; j < 5; j++) {
+      const data = []
+      for (let i = 0; i < 20; i++) {
+        if (reducedArr[j][i]) {
+          data.push({
+            package: reducedArr[j][i].title,
+            description: reducedArr[j][i].description.slice(0, 35)
+          })
+        }
+      }
+      // console.log('DEBUG: sending table with', asTable(data).length, 'length') // 2000
+      channel.send('```md\npage (' + (j + 1) + '/5)\n' + asTable(data) + '```')
+    }
 	}
 	if (msg.content === '!npm-all') {
-		queryModel('trending-npm-2')
-			.then(res => {
-				const channel = client.channels.cache.get(CHANNEL_ID)
-				for (let j = 0; j < 5; j++) {
-					const data = []
-					for (let i = 0; i < 20; i++) {
-						if (res._doc[(j * 20) + i]) {
-							data.push({
-								stars: res._doc[(j * 20) + i].stars,
-								package: res._doc[(j * 20) + i].name,
-								description: res._doc[(j * 20) + i].description.slice(0, 24)
-							})
-						}
-					}
-					// console.log('DEBUG: sending table with', asTable(data).length, 'length') // 2000
-					channel.send('```md\npage (' + (j + 1) + '/5)\n' + asTable(data) + '```')
-				}
-			})
-			.catch(err => console.log('err', err))
+    const res = await query('SELECT * FROM trending_npm_2')
+
+    const channel = client.channels.cache.get(process.env.NPM_ID)
+    const reducedArr = reduce(res, 20)
+    for (let j = 0; j < 5; j++) {
+      const data = []
+      for (let i = 0; i < 20; i++) {
+        if (reducedArr[j][i]) {
+          data.push({
+            stars: reducedArr[j][i].stars.split(' ')[0],
+            package: reducedArr[j][i].name,
+            description: reducedArr[j][i].description.slice(0, 30)
+          })
+        }
+      }
+      console.log('DEBUG: sending table with', asTable(data).length, 'length') // 2000
+      channel.send('```md\npage (' + (j + 1) + '/5)\n' + asTable(data) + '```')
+    }
 	}
 	if (msg.content === '!upcoming-games') {
-		queryModel('upcoming-games')
-			.then(res => {
-				const channel = client.channels.cache.get(CHANNEL_ID)
-				let desc = ''
-				for (const key in res._doc) {
-					if (!key.includes('_id') && !key.includes('createdAt') && !key.includes('updatedAt') && !key.includes('__v')) {
-						if (Number(key) < 30) {
-							desc += `[🔗](${res._doc[key].link}) ${res._doc[key].name}\n`
-						}
-					}
-				}
-				const embed = new Discord.MessageEmbed() // embed max 6000
-					.setColor('#de0000')
-					.setTitle('Upcoming Games')
-					.setDescription(desc)
-				channel.send(embed)
-			})
-			.catch(console.log)
+    const res = await query('SELECT * FROM upcoming_games')
+    const channel = client.channels.cache.get(process.env.GAMES_ID)
+    let desc = ''
+    res.forEach((game, index) => {
+      if (index < 30) desc +=`[🔗](${game.link}) ${game.name}\n`
+    })
+    const embed = new Discord.MessageEmbed() // embed max 6000
+      .setColor('#de0000')
+      .setTitle('Upcoming Games')
+      .setDescription(desc)
+    channel.send({embeds: [embed]})
 	}
-	if (msg.content.includes('!update') && !msg.author.bot) {
-		const channel = client.channels.cache.get(CHANNEL_ID)
+	if ((msg.content.includes('!update') && !msg.author.bot) || msg.content === '!monthly-update all') {
+		const channel = client.channels.cache.get(process.env.HACKER_ID)
 		const args = msg.content.split(' ').filter(item => item !== '!update') // remove initial !update
 		if (args.includes('all')) {
-			['upcoming-movies', 'trending-movies', 'trending-tv', 'upcoming-games', 'trending-npm-1', 'trending-npm-2', 'trending-github'].forEach(item => {
-				axios.get(`https://j8xl9nv9k9.execute-api.us-east-1.amazonaws.com/main/api/${item}?key=${process.env.KEY}`)
-					.then(() => channel.send(`✅ Database successfully updated ${item} collection`))
+			['upcoming_movies', 'trending_movies', 'trending_tv', 'upcoming_games', 'trending_npm_1', 'trending_npm_2', 'trending_github'].forEach(item => {
+				console.log('update all requests', `${API_URL}/${item}?key=${process.env.KEY}`)
+				axios.get(`${API_URL}/${item}?key=${process.env.KEY}`)
+					.then(() => channel.send(`✅ Database successfully updated ${item} table`))
 					.catch(err => channel.send(`😨 Something went wrong ${err}`))
 			})
 		} else {
@@ -161,191 +151,203 @@ client.on('message', msg => {
 				.setDescription('Select a reaction button corresponding to the item in the numbered list of database collections. This will send a request for new data to be scraped. The update command will only watch for reactions for 15 seconds and will add the 🛑 reaction to show that the command is no longer listening.')
 				.addFields([{
 					name: 'Collections',
-					value: '1. ALL\n2. upcoming-movies\n3. trending-movies\n4. trending-tv\n5. upcoming-games\n6. trending-npm-1\n7. trending-npm-2\n8. trending-github'
+					value: '1. ALL\n2. upcoming_movies\n3. trending_movies\n4. trending_tv\n5. upcoming_games\n6. trending_npm_1\n7. trending_npm_2\n8. trending_github'
 				}])
 				.setTitle('Update Database')
-				.setAuthor('CodaBot', 'https://i.imgur.com/pHPpNA6.png', 'https://github.com/CodaBool/p09-scraper-consumer/blob/main/discord-bot/index.js')
+				.setAuthor({ name: 'CodaBot', url: 'https://github.com/CodaBool/p09-scraper-consumer/blob/main/discord-bot/index.js', iconURL: 'https://i.imgur.com/pHPpNA6.png' })
 				.setThumbnail('https://cdn.dribbble.com/users/160117/screenshots/3197970/media/51a6e132b11664f7f2085bb6a35fc628.gif')
-			channel.send(embed)
-				.then(msg => {
-					msg.react('1⃣')
-					msg.react('2⃣')
-					msg.react('3⃣')
-					msg.react('4⃣')
-					msg.react('5⃣')
-					msg.react('6⃣')
-					msg.react('7⃣')
-					msg.react('8⃣')
-	
-					msg.awaitReactions(() => true, { time: 15000 }) // ms
-						.then(res => {
-							for (const emojiMap of res) {
-								let path = ''
-								if (emojiMap[0] === '1⃣' && emojiMap[1].count > 1) {
-									['upcoming-movies', 'trending-movies', 'trending-tv', 'upcoming-games', 'trending-npm-1', 'trending-npm-2', 'trending-github'].forEach(item => {
-										axios.get(`https://j8xl9nv9k9.execute-api.us-east-1.amazonaws.com/main/api/${item}?key=${process.env.KEY}`)
-											.then(() => channel.send(`✅ Database successfully updated ${item} collection`))
-											.catch(err => channel.send(`😨 Something went wrong ${err}`))
-									})
-								} else if (emojiMap[0] === '2⃣' && emojiMap[1].count > 1) {
-									path = 'upcoming-movies'
-								} else if (emojiMap[0] === '3⃣' && emojiMap[1].count > 1) {
-									path = 'trending-movies'
-								} else if (emojiMap[0] === '4⃣' && emojiMap[1].count > 1) {
-									path = 'trending-tv'
-								} else if (emojiMap[0] === '5⃣' && emojiMap[1].count > 1) {
-									path = 'upcoming-games'
-								} else if (emojiMap[0] === '6⃣' && emojiMap[1].count > 1) {
-									path = 'trending-npm-1'
-								} else if (emojiMap[0] === '7⃣' && emojiMap[1].count > 1) {
-									path = 'trending-npm-2'
-								} else if (emojiMap[0] === '8⃣' && emojiMap[1].count > 1) {
-									path = 'trending-github'
-								}
-								if (path) {
-									axios.get(`https://j8xl9nv9k9.execute-api.us-east-1.amazonaws.com/main/api/${path}?key=${process.env.KEY}`)
-										.then(() => channel.send(`✅ Database successfully updated ${path} collection`))
-										.catch(err => channel.send(`😨 Something went wrong ${err}`))
-								}
-								msg.react('🛑')
-							}
-						})
-						.catch(console.log)
+			const message = await channel.send({embeds: [embed]})
+			message.react('1⃣')
+			message.react('2⃣')
+			message.react('3⃣')
+			message.react('4⃣')
+			message.react('5⃣')
+			message.react('6⃣')
+			message.react('7⃣')
+			message.react('8⃣')
+			const collected = await message.awaitReactions({ filter: () => true, maxUsers: 2 })
+			const emote = collected.filter(emote => emote.count > 1).entries().next().value[0]
+			let path = ''
+			if (emote === '1⃣') {
+				['upcoming_movies', 'trending_movies', 'trending_tv', 'upcoming_games', 'trending_npm_1', 'trending_npm_2', 'trending_github'].forEach(item => {
+					console.log('request to', `${API_URL}/${item}?key=${process.env.KEY}`)
+					axios.get(`${API_URL}/${item}?key=${process.env.KEY}`)
+						.then(() => channel.send(`✅ Database successfully updated ${item} table`))
+						.catch(err => channel.send(`😨 Something went wrong ${err}`))
 				})
+			} else if (emote === '2⃣') {
+				path = 'upcoming_movies'
+			} else if (emote === '3⃣') {
+				path = 'trending_movies'
+			} else if (emote === '4⃣') {
+				path = 'trending_tv'
+			} else if (emote === '5⃣') {
+				path = 'upcoming_games'
+			} else if (emote === '6⃣') {
+				path = 'trending_npm_1'
+			} else if (emote === '7⃣') {
+				path = 'trending_npm_2'
+			} else if (emote === '8⃣') {
+				path = 'trending_github'
+			}
+			if (path) {
+				console.log('request to', `${API_URL}/${path}?key=${process.env.KEY}`)
+				axios.get(`${API_URL}/${path}?key=${process.env.KEY}`)
+					.then(() => channel.send(`✅ Database successfully updated ${path} table`))
+					.catch(err => channel.send(`😨 Something went wrong ${err}`))
+			}
+			message.react('🛑')
+
 		}
 	}
 	if (msg.content === '!upcoming-movies') {
-		queryModel('upcoming-movies')
-			.then(res => {
-				const scraped = (res.updatedAt.getMonth() + 1) + '/' + res.updatedAt.getUTCDate() + '/' + String(res.updatedAt.getFullYear()).slice(2)
-				const channel = client.channels.cache.get(CHANNEL_ID)
-				const fields = []
-				for (const date in res._doc) {
-					if (date.match(/\d/g)) { // is data
-						let value = ''
-						for (const key in res._doc[date]) {
-							value += res._doc[date][key].title + '\n'
-						}
-						fields.push({ name: date.split('_').join(' '), value })
-					}
-				}
-				let monthEmbed = new Discord.MessageEmbed() // embed max 6000
-					.setColor('#FFFF00')
-					.addFields(...fields)
-					.setTitle('Upcoming Movies')
-					.setAuthor('CodaBool', 'https://avatars.githubusercontent.com/u/61724833?v=4', 'https://codabool.com')
-					.setURL('https://www.imdb.com/calendar')
-					.setThumbnail('http://icons.iconarchive.com/icons/danleech/simple/1024/imdb-icon.png')
-					.setFooter('Scraped ' + scraped, 'http://icons.iconarchive.com/icons/danleech/simple/1024/imdb-icon.png')
-				channel.send(monthEmbed)
-			})
-			.catch(err => console.log('err', err))
+    const res = await query('SELECT * FROM upcoming_movies')
+		const updatedAt = new Date(res[0].updated_at).toDateString()
+		const channel = client.channels.cache.get(process.env.MOVIES_ID)
+		const rawMovies = res[0].raw_json
+    const fields = []
+
+		const groupedByDate = groupBy(rawMovies, 'date')
+
+    for (const [date, movies] of Object.entries(groupedByDate)) {
+			console.log(date)
+			console.log(movies.length)
+			let value = ''
+			for (const movie of movies) {
+				console.log(movie)
+				value += movie.title + '\n'
+			}
+			fields.push({ name: date, value })
+    }
+    let monthEmbed = new Discord.MessageEmbed() // embed max 6000
+      .setColor('#FFFF00')
+      .addFields(...fields)
+      .setTitle('Upcoming Movies')
+      .setURL('https://www.imdb.com/calendar')
+      .setThumbnail('http://icons.iconarchive.com/icons/danleech/simple/1024/imdb-icon.png')
+			.setAuthor({ name: 'CodaBot', url: 'https://codabool.com', iconURL: 'https://avatars.githubusercontent.com/u/61724833?v=4' })
+			.setFooter({text: 'Scraped ' + updatedAt, iconURL: 'http://icons.iconarchive.com/icons/danleech/simple/1024/imdb-icon.png'})
+		channel.send({embeds: [monthEmbed]})
 	}
 	if (msg.content === '!trending-movies') {
-		queryModel('trending-movies')
-			.then(res => {
-				const date = (res.updatedAt.getMonth() + 1) + '/' + res.updatedAt.getUTCDate() + '/' + String(res.updatedAt.getFullYear()).slice(2)
-				const channel = client.channels.cache.get(CHANNEL_ID)
-				for (let j = 0; j < 4; j++) {
-					const fields = []
-					for (let i = 0; i < 25; i++) {
-						if (res._doc[(j * 25) + i]) {
-							let rating = ''
-							if (res._doc[(j * 25) + i].rating) {
-								rating = `★${res._doc[(j * 25) + i].rating}`
-							} else {
-								rating = ' n/a'
-							}
-							let velocity = ''
-							if (res._doc[(j * 25) + i].velocity < 0) {
-								velocity = ` (${res._doc[(j * 25) + i].velocity})`
-							} else if (res._doc[(j * 25) + i].velocity > 0) {
-								velocity = ` (+${res._doc[(j * 25) + i].velocity})`
-							} else if (res._doc[(j * 25) + i].velocity === 0) {
-								velocity = ' (0)'
-							}
-							fields.push({
-								name: '#' + res._doc[(j * 25) + i].rank + ' ' + res._doc[(j * 25) + i].title,
-								value: `${rating} ${velocity}`
-							})
-						}
+		const res = await query('SELECT * FROM trending_movies')
+		const date = new Date(res[0].updated_at).toDateString()
+		const reducedArr = reduce(res, 25)
+		const channel = client.channels.cache.get(process.env.MOVIES_ID)
+		for (let j = 0; j < 4; j++) {
+			const fields = []
+			for (let i = 0; i < 25; i++) {
+				if (reducedArr[j][i]) {
+					let rating = ''
+					if (reducedArr[j][i].rating) {
+						rating = `★${reducedArr[j][i].rating}`
+					} else {
+						rating = ' n/a'
 					}
-					console.log(fields.length)
-
-					const monthEmbed = new Discord.MessageEmbed() // embed max 6000
-						.setColor('#FFFF00')
-						.addFields(...fields)
-						.setTitle('Trending Movies')
-						.setAuthor('CodaBool', 'https://avatars.githubusercontent.com/u/61724833?v=4', 'https://codabool.com')
-						.setURL('https://www.imdb.com/chart/moviemeter')
-						.setThumbnail('http://icons.iconarchive.com/icons/danleech/simple/1024/imdb-icon.png')
-						.setFooter('Scraped ' + date, 'http://icons.iconarchive.com/icons/danleech/simple/1024/imdb-icon.png')
-					channel.send(monthEmbed)
+					let velocity = ''
+					if (reducedArr[j][i].velocity < 0) {
+						velocity = ` (${reducedArr[j][i].velocity})`
+					} else if (reducedArr[j][i].velocity > 0) {
+						velocity = ` (+${reducedArr[j][i].velocity})`
+					} else if (reducedArr[j][i].velocity === 0) {
+						velocity = ' (0)'
+					}
+					fields.push({
+						name: '#' + reducedArr[j][i].rank + ' ' + reducedArr[j][i].title,
+						value: `${rating} ${velocity}`
+					})
 				}
-			})
-			.catch(err => console.log('err', err))
+			}
+			const monthEmbed = new Discord.MessageEmbed() // embed max 6000
+				.setColor('#FFFF00')
+				.addFields(...fields)
+				.setTitle('Trending Movies')
+				.setURL('https://www.imdb.com/chart/moviemeter')
+				.setThumbnail('http://icons.iconarchive.com/icons/danleech/simple/1024/imdb-icon.png')
+				.setAuthor({ name: 'CodaBot', url: 'https://codabool.com', iconURL: 'https://avatars.githubusercontent.com/u/61724833?v=4' })
+				.setFooter({text: 'Scraped ' + date, iconURL: 'http://icons.iconarchive.com/icons/danleech/simple/1024/imdb-icon.png'})
+			channel.send({embeds: [monthEmbed]})
+		}
 	}
 	if (msg.content === '!trending-tv') {
 		// TODO: args https://discordjs.guide/creating-your-bot/commands-with-user-input.html#basic-arguments
-		const args = msg.content.slice(12).trim().split(' ')
-		console.log('args', args)
-		queryModel('trending-tv')
-			.then(res => {
-				const date = (res.updatedAt.getMonth() + 1) + '/' + res.updatedAt.getUTCDate() + '/' + String(res.updatedAt.getFullYear()).slice(2)
-				const channel = client.channels.cache.get(CHANNEL_ID)
-				for (let j = 0; j < 4; j++) {
-					const fields = []
-					for (let i = 0; i < 25; i++) {
-						if (res._doc[(j * 25) + i]) {
-							let rating = ''
-							if (res._doc[(j * 25) + i].rating) {
-								rating = `★${res._doc[(j * 25) + i].rating}`
-							} else {
-								rating = ' n/a'
-							}
-							let emoji = ''
-							if (res._doc[(j * 25) + i].velocity < 0) {
-								emoji = ` (${res._doc[(j * 25) + i].velocity})`
-							} else if (res._doc[(j * 25) + i].velocity > 0) {
-								emoji = ` (+${res._doc[(j * 25) + i].velocity})`
-							} else if (res._doc[(j * 25) + i].velocity === 0) {
-								emoji = ' (0)'
-							}
-							fields.push({
-								name: '#' + res._doc[(j * 25) + i].rank + ' ' + res._doc[(j * 25) + i].title,
-								value: `${rating} ${emoji}`
-							})
-						}
+		// const args = msg.content.slice(12).trim().split(' ')
+		// console.log('args', args)
+		const res = await query('SELECT * FROM trending_tv')
+		const date = new Date(res[0].updated_at).toDateString()
+		const reducedArr = reduce(res, 25)
+		const channel = client.channels.cache.get(process.env.TV_ID)
+		for (let j = 0; j < 4; j++) {
+			const fields = []
+			for (let i = 0; i < 25; i++) {
+				if (reducedArr[j][i]) {
+					let rating = ''
+					if (reducedArr[j][i].rating) {
+						rating = `★${reducedArr[j][i].rating}`
+					} else {
+						rating = ' n/a'
 					}
-					const monthEmbed = new Discord.MessageEmbed() // embed max 6000
-						.setColor('#FFFF00')
-						.addFields(...fields)
-						.setTitle('Trending TV')
-						.setAuthor('CodaBool', 'https://avatars.githubusercontent.com/u/61724833?v=4', 'https://codabool.com')
-						.setURL('https://www.imdb.com/chart/tvmeter')
-						.setThumbnail('http://icons.iconarchive.com/icons/danleech/simple/1024/imdb-icon.png')
-						.setFooter('Scraped ' + date, 'http://icons.iconarchive.com/icons/danleech/simple/1024/imdb-icon.png')
-					channel.send(monthEmbed)
+					let emoji = ''
+					if (reducedArr[j][i].velocity < 0) {
+						emoji = ` (${reducedArr[j][i].velocity})`
+					} else if (reducedArr[j][i].velocity > 0) {
+						emoji = ` (+${reducedArr[j][i].velocity})`
+					} else if (reducedArr[j][i].velocity === 0) {
+						emoji = ' (0)'
+					}
+					fields.push({
+						name: '#' + reducedArr[j][i].rank + ' ' + reducedArr[j][i].title,
+						value: `${rating} ${emoji}`
+					})
 				}
-			})
-			.catch(err => console.log('err', err))
+			}
+			console.log(fields)
+			const monthEmbed = new Discord.MessageEmbed() // embed max 6000
+				.setColor('#FFFF00')
+				.addFields(...fields)
+				.setTitle('Trending TV')
+				.setURL('https://www.imdb.com/chart/tvmeter')
+				.setThumbnail('http://icons.iconarchive.com/icons/danleech/simple/1024/imdb-icon.png')
+				.setAuthor({ name: 'CodaBot', url: 'https://codabool.com', iconURL: 'https://avatars.githubusercontent.com/u/61724833?v=4' })
+				.setFooter({text: 'Scraped ' + date, iconURL: 'http://icons.iconarchive.com/icons/danleech/simple/1024/imdb-icon.png'})
+			channel.send({embeds: [monthEmbed]})
+		}
 	}
 })
 
 client.login(process.env.DISCORD_TOKEN)
 
-async function queryModel(collection, query) {
-	const connection = await mongoose.connect(process.env.MONGODB_URI)
-	let data = null
-	try {
-		const quickSchema = new mongoose.Schema({}, { strict: false, timestamps: true, collection })
-		const Model = mongoose.models[`${collection}`] || mongoose.model(collection, quickSchema)
-		data = await Model.findOne()
-	} catch (error) {
-		console.log(error)
-	} finally {
-		connection?.disconnect()
-		console.log('disconnected')
-		return data
-	}
+function reduce(arr, chunkSize) {
+  return arr.reduce((all, one, i) => {
+    const ch = Math.floor(i/chunkSize)
+    all[ch] = [].concat((all[ch]||[]), one)
+    return all
+  }, [])
+}
+
+// https://stackoverflow.com/questions/38575721/grouping-json-by-values
+function groupBy(xs, key) {
+	return xs.reduce(function(rv, x) {
+		(rv[x[key]] = rv[x[key]] || []).push(x)
+		return rv
+	}, {})
+}
+
+async function query(sql) {
+	const db = new pg.Client({ 
+		connectionString: process.env.PG_URI, 
+		ssl: { rejectUnauthorized: false } 
+	})
+  try {
+    await db.connect()
+    const data = await db.query(sql)
+      .then(res => res.rows)
+      .catch(err => console.error('query err', err.stack))
+    return data
+  } catch (err) {
+		console.error('query err', err)
+    return err
+  } finally {
+    await db.end()
+  }
 }
