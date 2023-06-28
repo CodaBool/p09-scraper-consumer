@@ -3,7 +3,7 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { dracula } from 'react-syntax-highlighter/dist/cjs/styles/prism'
-import FadeIn from 'react-fade-in'
+import { Fade } from "react-awesome-reveal"
 
 const markdown = `
 async function getUpComingMovies() {
@@ -47,52 +47,53 @@ export default function About() {
             &emsp;Have you ever run into websites which show something cool interesting and you would like to see more of it but don't want to actually bother to remember the page to go back. 
             This is what happened to me and the reasoning behind this project. Web Scraping is often used for places which do not offer proper programmatic solutions, like APIs or RSS feeds. 
             The way the technology works is a serverless Lambda function (which is just some code that runs on the cloud) will request the page just like any regular browser. 
-            However, it then uses a module called <a href="https://www.npmjs.com/package/jsdom">jsdom</a> which will parse the data. At which point I can grab the exact parts I find interesting. 
-            Then to finish up the function will connect to my Mongo database and save the good bits. 
-            That is the basics of the function to collect the data, then there is another function (really the same function but a different if else branch) which gets the latest stored collection in the database. 
+            However, it will then read over and parse the data. At which point a script can exact parts I find interesting. 
+            Then to finish up the function will connect to my a PostgreSQL database and save the good bits. 
+            That is the basics of the function to collect the data. 
             This ends up looking a lot like a regular API, which is not by accident, the intention is to make the data from a website into a more programmatically consumable source. 
             Then at last to complete project, I wanted convenient way to see the data.
-            There are a million ways you can do this, phone apps, websites, or desktop applications, really anything you can imagine. 
-            
+            There are an infite ways you can do this, phone apps, websites, or desktop applications, really anything you can imagine. 
           </p>
         </Col>
         <Col md={6}>
-          <FadeIn>
+          <Fade>
             <SyntaxHighlighter language="javascript" style={dracula} className="about-pre">
               {markdown}
             </SyntaxHighlighter>
-          </FadeIn>
+          </Fade>
         </Col>
         <Col md={6}>
-          <FadeIn delay={500}>
+          <Fade delay={500}>
             <div className="aboutTech">
               <img src="/image/discord-bot.jpg" className="w-100 mt-3 about-img" />
             </div>
-          </FadeIn>
+          </Fade>
         </Col>
         <Col md={6} className="aboutSummary p-5">
           <h5 className="display-4">How I ended up using it 🤖</h5>
           <p>
             &emsp;I was able to get data from several sites that I found interesting. 
             But now I had a different issue of how I would like to be viewing the data. 
-            I ended up using another module <a href="https://www.npmjs.com/package/discord.js">discord.js</a> to connect my custom API to a desktop application called Discord. 
-            This allowed me to type a command like !github and a bot would type an embed with all the scrapped data viewable in a table like format.
+            Discord offers many different SDKs will full API coverage. 
+            I wrote a bot in both JavaScript and later again in Golang.
+            This allowed me have scheduled posting the scrapped data viewable in a table like format.
           </p>
           <Row>
-            <FadeIn delay={500}>
+            <Fade delay={500}>
               <h5 className="text-center mt-4">Code 💾</h5>
               <hr className="w-50 mx-auto" />
               <p className="text-muted text-center" style={{fontSize: '1.1rem'}}>This website <a href="https://github.com/CodaBool/p09-scraper-consumer">repo</a></p>
-              <p className="text-muted text-center" style={{fontSize: '1.1rem'}}>Lambda Scraper <a href="https://github.com/CodaBool/p09-web-scraper">repo</a></p>
-              <p className="text-muted text-center" style={{fontSize: '1.1rem'}}>Discord Bot <a href="https://github.com/CodaBool/p09-scraper-consumer/blob/main/discord-bot/index.js">repo sub-folder</a></p>
-            </FadeIn>
+              <p className="text-muted text-center" style={{fontSize: '1.1rem'}}>Lambda Scraper <a href="https://github.com/CodaBool/AWS">repo</a></p>
+              <p className="text-muted text-center" style={{fontSize: '1.1rem'}}>Lambda Discord Bot <a href="hhttps://github.com/CodaBool/AWS">repo</a></p>
+            </Fade>
           </Row>
         </Col>
         <Col md={6} className="aboutSummary p-5">
           <h5 className="display-4">Issues I encountered 😤</h5>
           <p>
-            &emsp;I built the technology entirely using the AWS platform and the entire DevOps solution is automated between Github Actions and the Serverless framework.
-            I have had several projects using Serverless already and have come to like the framework. 
+            &emsp;I built the technology entirely using the AWS platform and the entire process is automated.
+            I have rewrote this from JavaScript to Golang. 
+            I also used to use the Serverless framework to deploy the Lambda but switched it to Terraform.
             However, I do run into plenty of issues. Serverless is a large community project and goes through versioning as well as forks. 
             I ran into issues with correctly setting up a API Gateway for my Lambda. I ran into issues with webpack since I first opted for ES6 code with conversion. 
             In the end I cut Webpack due to it being too much overhead and too tricky to configure. 
@@ -102,9 +103,9 @@ export default function About() {
           </p>
         </Col>
         <Col md={6}>
-          <FadeIn delay={1750}>
+          <Fade delay={1750}>
             <img src="https://www.mindgrub.com/sites/default/files/partners/Amazon%20Web%20Services_0.png" className="rounded shadow w-100 mx-auto mt-5" />
-          </FadeIn>
+          </Fade>
         </Col>
       </Row>
     </Container>

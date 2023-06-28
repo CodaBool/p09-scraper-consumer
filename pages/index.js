@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import FadeIn from 'react-fade-in'
+import { Fade } from "react-awesome-reveal"
 import Toast from '../components/Toast'
 import { LIST_OF_ENDPOINTS, BASE_API_ENDPOINT } from '../constants'
 import Button from 'react-bootstrap/Button'
@@ -9,8 +9,6 @@ import Card from 'react-bootstrap/Card'
 import { ArrowReturnRight, ArrowLeft, PlayFill } from 'react-bootstrap-icons'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { dracula } from 'react-syntax-highlighter/dist/cjs/styles/prism'
-// https://www.npmjs.com/package/react-fade-in
-import axios from 'axios'
 import trendingGithub from '../data/trending-github.json'
 import trendingMovies from '../data/trending-movies.json'
 import trendingNPM1 from '../data/trending-npm-1.json'
@@ -53,7 +51,7 @@ ${BASE_API_ENDPOINT}${endpoint}\`)
   }
 
   return (
-    <FadeIn>
+    <Fade>
       <h1 className="my-4 display-3">Welcome, </h1>
       <h5 className="">This is a simple page to interact with a lambda which scrapes websites and outputs the relevant data. To save on costs, this is using cached dummy data from 2021. More info about how it works and other info can be found in the about page</h5>
       <Col>
@@ -90,11 +88,11 @@ ${BASE_API_ENDPOINT}${endpoint}\`)
                   </SyntaxHighlighter>
                   <div className="mx-2"></div>
                   {data && 
-                    <FadeIn>
+                    <Fade>
                       <SyntaxHighlighter language="javascript" style={dracula} className="index-pre">
                         {JSON.stringify(data, null, 2)}
                       </SyntaxHighlighter>
-                    </FadeIn>
+                    </Fade>
                   }
                 </div>
               </div>
@@ -108,7 +106,7 @@ ${BASE_API_ENDPOINT}${endpoint}\`)
           className="mx-auto mb-5"
           variant="light"
           style={{width: '10em'}}
-          href="https://github.com/CodaBool/p09-scraper-consumer"
+          href="https://github.com/CodaBool/AWS"
         >
           See Code <ArrowReturnRight className="ml-2" size={18} />
         </Button>
@@ -116,6 +114,6 @@ ${BASE_API_ENDPOINT}${endpoint}\`)
       <div className="toastHolder" style={{position: 'fixed', top: '10%', right: '10%'}}>
         <Toast show={!!error} setShow={setError} title='Could not Sign you in' body={<p className="text-danger"><strong>{error}</strong></p>} error />
       </div>
-    </FadeIn>
+    </Fade>
   )
 }

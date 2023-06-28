@@ -1,3 +1,5 @@
+// this has been rewritten in Golang and can be found under https://github.com/codabool/aws
+
 require('dotenv').config()
 const Discord = require('discord.js')
 const asTable = require('as-table')
