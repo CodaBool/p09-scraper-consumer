@@ -11,6 +11,9 @@ Programmatic access in general is seen as fueling competetive models of generati
 
 So, scraping becomes the solution for hacking together data outside confines of official apps.
 
+# 🖊️ Details
+> you can find more info about this project in my blog post [here](https://codabool.com/blog/17)
+
 
 # 🦫 Rewritten
 I have rewriten the scraper and its companion Discord bot in Golang
